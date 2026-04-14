@@ -13,9 +13,9 @@ public class Question {
 
     /*
      * Method that checks if the user's answer is correct
-     * 
+     *
      * @Param String guess --> the user's answer to the question
-     * 
+     *
      * @Return --> returns true if the answer = the user's guess; returns false
      * otherwise
      */
@@ -31,6 +31,11 @@ public class Question {
         for (int i = 0; i < choices.length; i++) {
             System.out.println((i + 1) + "." + choices[i]);
         }
+    }
+
+    public String getChoice(int index)
+    {
+        return choices[index - 1]; // -1 because choices array starts at 0
     }
 
 }

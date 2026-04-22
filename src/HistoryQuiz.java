@@ -2,6 +2,9 @@ import java.util.ArrayList;
 
 public class HistoryQuiz
 {
+    /*
+    * Method that contains the history themed quiz questions, which follow the structure of the constructor created in the Question class
+    */
     public ArrayList<Question> loadQuestions()
     {
         ArrayList<Question> questions = new ArrayList<>();

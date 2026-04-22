@@ -33,6 +33,11 @@ public class Question {
         }
     }
 
+    /*
+    * Method that gets the user's choice as a numer
+    * @Param int index --> the number the user enters as their answer to the question
+    * @Return --> returns their choice that is adjusted by 1 since arrays start at 0 instead of 1
+    */
     public String getChoice(int index)
     {
         return choices[index - 1]; // -1 because choices array starts at 0

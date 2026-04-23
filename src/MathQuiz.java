@@ -36,6 +36,36 @@ public class MathQuiz {
             "Left up, right down"
         ));
 
+        questions.add(new Question(
+            "What is the vertical asymptote of f(x) = 3 / (x-2)?",
+            new String[]{"x = -2", "x = 2", "y = 2", "y = -2"},
+            "x = 2"
+        ));
+
+        questions.add(new Question(
+            "How many solutions does the system have? | y = x^2 | y = 2x + 3 |",
+            new String[]{"0", "1", "2", "Infinitely many"},
+            "2"
+        ));
+
+        questions.add(new Question(
+            "What is the 5th term of the geometric sequence: |2, 6, 18, ... |",
+            new String[]{"54", "162", "486", "1458"},
+            "162"
+        ));
+
+        questions.add(new Question(
+            "Simplify: (1 - cos^2 x) / (sinx) ",
+            new String[]{"sinx", "cosx", "tanx", "cscx"},
+            "sinx"
+        ));
+
+        questions.add(new Question(
+            "What is the vertex of | y = (x-4)^2 + 1 |?",
+            new String[]{"(4, 1)", "(-4, 1)", "(4, -1)", "(1, 4)"},
+            "(4, 1)"
+        ));
+
         return questions;
     }
 

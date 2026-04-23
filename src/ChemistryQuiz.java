@@ -42,6 +42,30 @@ public class ChemistryQuiz {
             "7"
         ));
 
+        questions.add(new Question(
+            "Which compound is most soluble in water?",
+            new String[]{"CH₄", "NaCl", "CO₂", "I₂"},
+            "NaCl"
+        ));
+
+        questions.add(new Question(
+            "Which change will increase the rate of a reaction?",
+            new String[]{"Lowering temperature", "Decreasing concentration", "Adding a catalyst", "Increasing activation energy"},
+            "Adding a catalyst"
+        ));
+
+        questions.add(new Question(
+            "Which is the strongest acid?",
+            new String[]{"HCl", "HF", "NH₃", "H₂O"},
+            "HCl"
+        ));
+
+        questions.add(new Question(
+            "In a galvanic (voltaic) cell, electrons flow:",
+            new String[]{"From cathode to anode", "From anode to cathode", "Through the salt bridge", "From positive to positive terminal"},
+            "From anode to cathode"
+        ));
+
         return questions;
     }
 

@@ -23,6 +23,10 @@ public class Question {
         return answer.equalsIgnoreCase(guess);
     }
 
+    public String getAnswer() {
+        return answer;
+    }
+
     /*
      * Method that displays the question to the user
      */

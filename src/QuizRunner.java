@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class QuizRunner
@@ -42,7 +43,9 @@ public class QuizRunner
     */
     public static void runQuiz(ArrayList<Question> questions, Scanner scanner)
     {
+        Collections.shuffle(questions); // randomizes the order of the questions for each quiz
         int score = 0;
+        ArrayList<Question> wrong = new ArrayList<>(); // keeps track of the questions the user got wrong to review at the end of the quiz
 
         for (int i = 0; i < questions.size(); i++)
         {
@@ -62,11 +65,11 @@ public class QuizRunner
             else
             {
                 System.out.println("Wrong!");
+                wrong.add(questions.get(i));
             }
         }
 
-        System.out.println("\n--- Quiz Complete ---");
-        System.out.println("Your score: " + score + "/" + questions.size());
+        showResults(score, questions.size(), wrong);
     }
 
     /*
@@ -80,5 +83,38 @@ public class QuizRunner
         System.out.println("2. Math");
         System.out.println("3. Chemistry");
         System.out.println("Enter your choice (number): ");
+    }
+
+    public static void showResults(int score, int total, ArrayList<Question> wrong)
+    {
+        System.out.println("\n--- Quiz Complete ---");
+        System.out.println("Your score: " + score + "/" + total);
+
+        int percentage = (int) ((double) score / total * 100);
+        System.out.println("Percentage: " + percentage + "%");
+
+        if (percentage == 100)
+        {
+            System.out.println("Excellent work! You got a perfect score!");
+        }
+        else if (percentage >= 70)
+        {
+            System.out.println("Good Work! You passed the quiz!");
+        }
+        else
+        {
+            System.out.println("Keep practicing! You'll get better with more practice!");
+        }
+
+        if (wrong.size() > 0)
+        {
+            System.out.println("\nReview the questions you got wrong:");
+            for (Question q : wrong)
+            {
+                q.displayQuestion();
+                System.out.println("Correct answer: " + q.getAnswer());
+                System.out.println();
+            }
+        }
     }
 }

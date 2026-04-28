@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
-import java.util.concurrent;
 
 public class QuizRunner
 {
@@ -45,7 +44,7 @@ public class QuizRunner
             System.out.println("1. Yes");
             System.out.println("2. No");
 
-            int again = getValidInput(scanner, 1, 2);
+            int again = getValidInput(scanner);
             playAgain = (again == 1);
         }
 
@@ -68,10 +67,10 @@ public class QuizRunner
         {
             System.out.println("\nQuestion " + (i+1) + " of " + questions.size());
             questions.get(i).displayQuestion();
-            System.out.print("Enter the number of your answer: ");
-            int choice = getValidInput(scanner, 1, 4);
+            System.out.print("Enter the letter of your answer: ");
+            String answer = getValidInput(scanner);
 
-            String guess = questions.get(i).getChoice(choice);
+            String guess = questions.get(i).getChoice(answer);
 
             if (questions.get(i).isCorrect(guess))
             {
@@ -93,13 +92,20 @@ public class QuizRunner
     */
     public static void showMenu()
     {
-        System.out.println("\n--- Welcome to the Quiz Program ---");
+        sleep(400);
+        System.out.println("\n===============================");
+        System.out.println("      JAVA QUIZ APP      ");
+        System.out.println("===============================");
+        sleep(200);
         System.out.println("\nSelect a subject you wish to study: ");
-        TimeUnit.SECONDS.sleep(2); 
-        System.out.println("1. History");
-        System.out.println("2. Math");
-        System.out.println("3. Chemistry");
-        System.out.println("Enter your choice (number): ");
+        sleep(100);
+        System.out.println("  1. History");
+        sleep(100);
+        System.out.println("  2. Math");
+        sleep(100);
+        System.out.println("  3. Chemistry");
+        System.out.println("-----------------------------");
+        System.out.println("Enter your choice: ");
     }
 
     /*
@@ -144,28 +150,37 @@ public class QuizRunner
     /*
     * Method that handles invalid input from the user to promote program functionality
     * @Param scanner --> input that is given by the user
-    * @Param int min --> lowest option of the number of choices given (ex. type 1 to play again and type 2 to quit; option 1 = min)
-    * @Param int max --> highest option of the number of choices given (ex. type 1 to play again and type 2 to quit; option 2 = max)
-    * @Return input --> returns the int value input
+    * @Return input --> returns the string value input
     */
-    public static int getValidInput(Scanner scanner, int min, int max)
+    public static String getValidInput(Scanner scanner)
     {
-        int input = -1;
+        String[] valid = {"A", "B", "C", "D", "Q"};
 
-        while (input < min || input > max)
+        while (true)
         {
-            try {
-                input = Integer.parseInt(scanner.nextLine().trim());
-                if (input < min || input > max)
+            String input = scanner.nextLine().trim().toUpperCase();
+            for (String v : valid)
+            {
+                if (input.equals(v))
                 {
-                    System.out.println("Please enter a valid number between " + min + " and " + max + ".");
+                    return input;
                 }
             }
-            catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a number.");
-
-            }
+            System.out.println("Invalid input. Enter A, B, C, D, or Q to quit");
         }
-        return input;
+    }
+
+    /*
+    * Method that is intended to delay the output using thread.sleep(number of miliseconds to delay)
+    * @Param int ms --> number of miliseconds to delay
+    */
+    public static void sleep(int ms)
+    {
+        try {
+            Thread.sleep(ms);
+        }
+        catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

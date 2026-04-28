@@ -31,9 +31,10 @@ public class Question {
      * Method that displays the question to the user
      */
     public void displayQuestion() {
-        System.out.println(prompt);
+        System.out.println("\n" + prompt);
+        String[] letters = {"A", "B", "C", "D", "Q"};
         for (int i = 0; i < choices.length; i++) {
-            System.out.println((i + 1) + "." + choices[i]);
+            System.out.println(" " + (letters[i]) + ") " + choices[i]);
         }
     }
 
@@ -42,9 +43,16 @@ public class Question {
     * @Param int index --> the number the user enters as their answer to the question
     * @Return --> returns their choice that is adjusted by 1 since arrays start at 0 instead of 1
     */
-    public String getChoice(int index)
+    public String getChoice(String letter)
     {
-        return choices[index - 1]; // -1 because choices array starts at 0
+        switch (letter.toUpperCase())
+        {
+            case "A": return choices[0];
+            case "B": return choices[1];
+            case "C": return choices[2];
+            case "D": return choices[3];
+            default: return "";
+        }
     }
 
 }

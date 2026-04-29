@@ -16,9 +16,25 @@ public class QuizRunner
         {
             ArrayList<Question> questions = new ArrayList<>();
 
-            showMenu();
-            int subject = scanner.nextInt();
-            scanner.nextLine();
+            int subject = 0;
+            while (subject < 1 || subject > 3)
+            {
+                showMenu();
+                try {
+                    subject = Integer.parseInt(scanner.nextLine().trim());
+                    if (subject < 1 || subject > 3)
+                    {
+                        sleep(200);
+                        System.out.println("Invalid choice. Please select 1, 2, or 3.");
+                        subject = 0;
+                    }
+                }
+                catch (NumberFormatException e) {
+                    sleep(200);
+                    System.out.println("Invalid input: Please enter a number. ");
+                    subject = 0;
+                }
+            }
 
             switch (subject)
             {
@@ -40,12 +56,16 @@ public class QuizRunner
 
             runQuiz(questions, scanner);
 
-            System.out.println("Would you like to play again?");
-            System.out.println("1. Yes");
-            System.out.println("2. No");
-
-            int again = getValidInput(scanner);
-            playAgain = (again == 1);
+            sleep(400);
+            System.out.println("\nWould you like to play again? (Y/N");
+            System.out.println("Your choice: ");
+            String again = scanner.nextLine().trim().toUpperCase();
+            while (!again.equals("Y") && !again.equals("N"))
+            {
+                System.out.println("Invalid input. Enter Y or N: ");
+                again = scanner.nextLine().trim().toUpperCase();
+            }
+            playAgain = again.equals("Y");
         }
 
         System.out.println("\nThanks for playing. Goodbye!");
@@ -63,25 +83,48 @@ public class QuizRunner
         int score = 0;
         ArrayList<Question> wrong = new ArrayList<>(); // keeps track of the questions the user got wrong to review at the end of the quiz
 
+        sleep(300);
+        System.out.println("\n-------------------------------");
+        System.out.println("   Quiz starting! Good Luck!");
+        System.out.println("-------------------------------");
+        sleep(600);
+
         for (int i = 0; i < questions.size(); i++)
         {
+            sleep(300);
             System.out.println("\nQuestion " + (i+1) + " of " + questions.size());
+            System.out.println("(Enter 'Q' at any time to quit)");
             questions.get(i).displayQuestion();
+            sleep(1000);
             System.out.print("Enter the letter of your answer: ");
+
             String answer = getValidInput(scanner);
+
+            if (answer.equals("Q"))
+            {
+                sleep(200);
+                System.out.println("\nQuiz exited early");
+                System.out.println("Questions answered: " + i + " of " + questions.size());
+                sleep(300);
+                showResults(score, i, wrong);
+                return;
+            }
 
             String guess = questions.get(i).getChoice(answer);
 
             if (questions.get(i).isCorrect(guess))
             {
-                System.out.println("Correct!");
+                sleep(200);
+                System.out.println("   >> Correct!");
                 score++;
             }
             else
             {
-                System.out.println("Wrong!");
+                sleep(200);
+                System.out.println("   >> Wrong! The correct answer was: " +  questions.get(i).getAnswerLetter() + questions.get(i).getAnswer());
                 wrong.add(questions.get(i));
             }
+            sleep(400);
         }
 
         showResults(score, questions.size(), wrong);
@@ -105,7 +148,7 @@ public class QuizRunner
         sleep(100);
         System.out.println("  3. Chemistry");
         System.out.println("-----------------------------");
-        System.out.println("Enter your choice: ");
+        System.out.print("Enter your choice (number): ");
     }
 
     /*
@@ -116,34 +159,47 @@ public class QuizRunner
     */
     public static void showResults(int score, int total, ArrayList<Question> wrong)
     {
-        System.out.println("\n--- Quiz Complete ---");
-        System.out.println("Your score: " + score + "/" + total);
+        sleep(400);
+        System.out.println("\n===============================");
+        System.out.println("           Quiz Complete           ");
+        System.out.println("===============================");
+        sleep(300);
+        System.out.println("   Your score:    " + score + " / " + total);
+        sleep(200);
 
         int percentage = (int) ((double) score / total * 100);
         System.out.println("Percentage: " + percentage + "%");
 
         if (percentage == 100)
         {
+            sleep(250);
             System.out.println("Excellent work! You got a perfect score!");
         }
         else if (percentage >= 70)
         {
+            sleep(250);
             System.out.println("Good Work! You passed the quiz!");
         }
         else
         {
+            sleep(250);
             System.out.println("Keep practicing! You'll get better with more practice!");
         }
+        sleep(300);
+        System.out.println("------------------------------------------");
 
         if (wrong.size() > 0)
         {
-            System.out.println("\nReview the questions you got wrong:");
+            sleep(200);
+            System.out.println("\nQuestions you missed:");
             for (Question q : wrong)
             {
+                sleep(300);
                 q.displayQuestion();
-                System.out.println("Correct answer: " + q.getAnswer());
+                System.out.println("   >> Correct answer: " + q.getAnswer());
                 System.out.println();
             }
+            System.out.println("------------------------------------------");
         }
     }
 

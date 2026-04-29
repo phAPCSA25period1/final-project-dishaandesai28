@@ -55,4 +55,21 @@ public class Question {
         }
     }
 
+    /*
+    * Method that returns the letter of the correct answer
+    * @Return letters[i] --> the letter of the correct answer
+    */
+    public String getAnswerLetter()
+    {
+        String[] letters = {"A", "B", "C", "D"};
+        for (int i = 0; i < choices.length; i++)
+        {
+            if (choices[i].equalsIgnoreCase(answer))
+            {
+                return (letters[i] + ") ");
+            }
+        }
+        return "";
+    }
+
 }

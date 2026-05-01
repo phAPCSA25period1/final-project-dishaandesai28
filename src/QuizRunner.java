@@ -4,6 +4,10 @@ import java.util.Scanner;
 
 public class QuizRunner
 {
+
+    static String[][] leaderboard = new String[5][2];
+    static int leaderboardCount = 0;
+
     /*
     * Main method that simulates the quiz game
     */
@@ -15,6 +19,10 @@ public class QuizRunner
         while (playAgain)
         {
             ArrayList<Question> questions = new ArrayList<>();
+            sleep(300);
+            System.out.println("Enter your name: ");
+            String playerName = scanner.nextLine().trim();
+            if (playerName.isEmpty()) playerName = "Player";
 
             int subject = 0;
             while (subject < 1 || subject > 3)
@@ -54,7 +62,9 @@ public class QuizRunner
                     System.out.println("Invalid choice!");
             }
 
-            runQuiz(questions, scanner);
+            int finalScore = runQuiz(questions, scanner);
+            updateLeaderboard(playerName, finalScore, questions.size());
+            displayLeaderboard();
 
             sleep(400);
             System.out.println("\nWould you like to play again? (Y/N");
@@ -77,7 +87,7 @@ public class QuizRunner
     * @Param questions --> the list of quiz questions that will be displayed to the user
     * @Param scanner --> the scanner allows the user to put input to ensure the quiz works as intended
     */
-    public static void runQuiz(ArrayList<Question> questions, Scanner scanner)
+    public static int runQuiz(ArrayList<Question> questions, Scanner scanner)
     {
         Collections.shuffle(questions); // randomizes the order of the questions for each quiz
         int score = 0;
@@ -107,7 +117,7 @@ public class QuizRunner
                 System.out.println("Questions answered: " + i + " of " + questions.size());
                 sleep(300);
                 showResults(score, i, wrong);
-                return;
+                return score;
             }
 
             String guess = questions.get(i).getChoice(answer);
@@ -128,6 +138,7 @@ public class QuizRunner
         }
 
         showResults(score, questions.size(), wrong);
+        return score;
     }
 
     /*
@@ -238,5 +249,77 @@ public class QuizRunner
         catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    /*
+    * Method that adds the player's score to the leaderboard if it qualifies. Keeps the top 5 scores sorted from highest to lowest
+    * @Param String namr --> the player's name
+    * @Param int score --> the player's score
+    * @Param int total --> the total number of questions
+    */
+    public static void updateLeaderboard(String name, int score, int total)
+    {
+        if (leaderboardCount < 5)
+        {
+            leaderboard[leaderboardCount][0] = name;
+            leaderboard[leaderboardCount][1] = score + "/" + total;
+            leaderboardCount++;
+        }
+        else{
+            // finds the lowest score and replaces if the new score is higher
+            int lowestIndex = 0;
+            int lowestScore = Integer.parseInt(leaderboard[0][1].split("/")[0]);
+            for (int i = 1; i < 5; i++)
+            {
+                int s = Integer.parseInt(leaderboard[i][1].split("/")[0]);
+                if (s < lowestScore)
+                {
+                    lowestScore = s;
+                    lowestIndex = i;
+                }
+            }
+            if (score > lowestScore)
+            {
+                leaderboard[lowestIndex][0] = name;
+                leaderboard[lowestIndex][1] = score + "/" + total;
+            }
+        }
+        for (int i = 0; i < leaderboardCount - 1; i++)
+        {
+            for (int j = 0; j < leaderboardCount - i - 1; j++)
+            {
+                int a = Integer.parseInt(leaderboard[j][1].split("/")[0]);
+                int b = Integer.parseInt(leaderboard[j+1][1].split("/")[0]);
+                if (a < b)
+                {
+                    String[] temp = leaderboard[j];
+                    leaderboard[j] = leaderboard[j+1];
+                    leaderboard[j+1] = temp;
+                }
+            }
+        }
+    }
+
+    public static void displayLeaderboard()
+    {
+        sleep(300);
+        System.out.println("\n=========================================");
+        System.out.println("      Leaderboard      ");
+        System.out.println("=========================================");
+
+        if (leaderboardCount == 0)
+        {
+            System.out.println(" No scores yet!");
+        }
+        else
+        {
+            String[] medals = {"1st", "2nd", "3rd", "4th", "5th"};
+            for (int i = 0; i < leaderboardCount; i++)
+            {
+                sleep(150);
+                System.out.println(" " + medals[i] + " " + leaderboard[1][0] + " - " + leaderboard[i][1]);
+            }
+        }
+        System.out.println("===================================");
     }
 }

@@ -19,10 +19,6 @@ public class QuizRunner
         while (playAgain)
         {
             ArrayList<Question> questions = new ArrayList<>();
-            sleep(300);
-            System.out.println("Enter your name: ");
-            String playerName = scanner.nextLine().trim();
-            if (playerName.isEmpty()) playerName = "Player";
 
             int subject = 0;
             while (subject < 1 || subject > 3)
@@ -43,6 +39,11 @@ public class QuizRunner
                     subject = 0;
                 }
             }
+
+            sleep(300);
+            System.out.print("Enter your name: ");
+            String playerName = scanner.nextLine().trim();
+            if (playerName.isEmpty()) playerName = "Player";
 
             switch (subject)
             {
@@ -67,7 +68,7 @@ public class QuizRunner
             displayLeaderboard();
 
             sleep(400);
-            System.out.println("\nWould you like to play again? (Y/N");
+            System.out.println("\nWould you like to play again? (Y/N)");
             System.out.println("Your choice: ");
             String again = scanner.nextLine().trim().toUpperCase();
             while (!again.equals("Y") && !again.equals("N"))
@@ -253,7 +254,7 @@ public class QuizRunner
 
     /*
     * Method that adds the player's score to the leaderboard if it qualifies. Keeps the top 5 scores sorted from highest to lowest
-    * @Param String namr --> the player's name
+    * @Param String name --> the player's name
     * @Param int score --> the player's score
     * @Param int total --> the total number of questions
     */
@@ -292,14 +293,20 @@ public class QuizRunner
                 int b = Integer.parseInt(leaderboard[j+1][1].split("/")[0]);
                 if (a < b)
                 {
-                    String[] temp = leaderboard[j];
-                    leaderboard[j] = leaderboard[j+1];
-                    leaderboard[j+1] = temp;
+                    String tempName = leaderboard[j][0];
+                    String tempScore = leaderboard[j][1];
+                    leaderboard[j][0] = leaderboard[j+1][0];
+                    leaderboard[j][1] = leaderboard[j+1][1];
+                    leaderboard[j+1][0] = tempName;
+                    leaderboard[j+1][1] = tempScore;
                 }
             }
         }
     }
 
+    /*
+    * Method that displays the current leaderboard to the user
+    */
     public static void displayLeaderboard()
     {
         sleep(300);
@@ -317,7 +324,7 @@ public class QuizRunner
             for (int i = 0; i < leaderboardCount; i++)
             {
                 sleep(150);
-                System.out.println(" " + medals[i] + " " + leaderboard[1][0] + " - " + leaderboard[i][1]);
+                System.out.println(" " + medals[i] + " " + leaderboard[i][0] + " - " + leaderboard[i][1]);
             }
         }
         System.out.println("===================================");

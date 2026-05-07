@@ -58,7 +58,7 @@ public class HistoryQuiz
         ));
 
         questions.add(new Question(
-            "At the , delegates issued the Declaration of Sentiments to advocate for which of the following specific reforms?",
+            "At the Seneca Falls Convention, delegates issued the Declaration of Sentiments to advocate for which of the following specific reforms?",
             new String[]{"The immediate abolition of slavery nationwide", "Equal voting rights for women", "The end of child labor in factories", "Free public education for all citizens"},
             "Equal voting rights for women"
         ));

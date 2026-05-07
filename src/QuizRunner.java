@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class QuizRunner
 {
 
-    static String[][] leaderboard = new String[5][2];
+    static String[][] leaderboard = new String[5][3];
     static int leaderboardCount = 0;
 
     /*
@@ -45,26 +45,30 @@ public class QuizRunner
             String playerName = scanner.nextLine().trim();
             if (playerName.isEmpty()) playerName = "Player";
 
+            String subjectName = "";
             switch (subject)
             {
                 case 1:
                     HistoryQuiz hq = new HistoryQuiz();
                     questions = hq.loadQuestions();
+                    subjectName = "History";
                     break;
                 case 2:
                     MathQuiz mq = new MathQuiz();
                     questions = mq.loadQuestions();
+                    subjectName = "Math";
                     break;
                 case 3:
                     ChemistryQuiz cq = new ChemistryQuiz();
                     questions = cq.loadQuestions();
+                    subjectName = "Chemistry";
                     break;
                 default:
                     System.out.println("Invalid choice!");
             }
 
-            int finalScore = runQuiz(questions, scanner);
-            updateLeaderboard(playerName, finalScore, questions.size());
+            int[] finalScore = runQuiz(questions, scanner);
+            updateLeaderboard(playerName, finalScore[0], finalScore[1], subjectName);
             displayLeaderboard();
 
             sleep(400);
@@ -88,7 +92,7 @@ public class QuizRunner
     * @Param questions --> the list of quiz questions that will be displayed to the user
     * @Param scanner --> the scanner allows the user to put input to ensure the quiz works as intended
     */
-    public static int runQuiz(ArrayList<Question> questions, Scanner scanner)
+    public static int[] runQuiz(ArrayList<Question> questions, Scanner scanner)
     {
         Collections.shuffle(questions); // randomizes the order of the questions for each quiz
         int score = 0;
@@ -118,7 +122,7 @@ public class QuizRunner
                 System.out.println("Questions answered: " + i + " of " + questions.size());
                 sleep(300);
                 showResults(score, i, wrong);
-                return score;
+                return new int[]{score, i};
             }
 
             String guess = questions.get(i).getChoice(answer);
@@ -139,7 +143,7 @@ public class QuizRunner
         }
 
         showResults(score, questions.size(), wrong);
-        return score;
+        return new int[]{score, questions.size()};
     }
 
     /*
@@ -258,12 +262,13 @@ public class QuizRunner
     * @Param int score --> the player's score
     * @Param int total --> the total number of questions
     */
-    public static void updateLeaderboard(String name, int score, int total)
+    public static void updateLeaderboard(String name, int score, int total, String subject)
     {
         if (leaderboardCount < 5)
         {
             leaderboard[leaderboardCount][0] = name;
             leaderboard[leaderboardCount][1] = score + "/" + total;
+            leaderboard[leaderboardCount][2] = subject;
             leaderboardCount++;
         }
         else{
@@ -283,6 +288,7 @@ public class QuizRunner
             {
                 leaderboard[lowestIndex][0] = name;
                 leaderboard[lowestIndex][1] = score + "/" + total;
+                leaderboard[lowestIndex][2] = subject;
             }
         }
         for (int i = 0; i < leaderboardCount - 1; i++)
@@ -293,12 +299,15 @@ public class QuizRunner
                 int b = Integer.parseInt(leaderboard[j+1][1].split("/")[0]);
                 if (a < b)
                 {
-                    String tempName = leaderboard[j][0];
-                    String tempScore = leaderboard[j][1];
-                    leaderboard[j][0] = leaderboard[j+1][0];
-                    leaderboard[j][1] = leaderboard[j+1][1];
+                    String tempName    = leaderboard[j][0];
+                    String tempScore   = leaderboard[j][1];
+                    String tempSubject = leaderboard[j][2];
+                    leaderboard[j][0]   = leaderboard[j+1][0];
+                    leaderboard[j][1]   = leaderboard[j+1][1];
+                    leaderboard[j][2]   = leaderboard[j+1][2];
                     leaderboard[j+1][0] = tempName;
                     leaderboard[j+1][1] = tempScore;
+                    leaderboard[j+1][2] = tempSubject;
                 }
             }
         }
@@ -324,7 +333,7 @@ public class QuizRunner
             for (int i = 0; i < leaderboardCount; i++)
             {
                 sleep(150);
-                System.out.println(" " + medals[i] + " " + leaderboard[i][0] + " - " + leaderboard[i][1]);
+                System.out.println(" " + medals[i] + " " + leaderboard[i][0] + " - " + leaderboard[i][1] + " (" + leaderboard[i][2] + ")");
             }
         }
         System.out.println("===================================");

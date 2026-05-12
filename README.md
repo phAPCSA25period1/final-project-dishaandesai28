@@ -1,189 +1,73 @@
-[![Open in Codespaces](https://classroom.github.com/assets/launch-codespace-2972f46106e565e64193e422d61a12cf1da4916b45550586e14ef0a7c637dd04.svg)](https://classroom.github.com/open-in-codespaces?assignment_repo_id=23508507)
-# AP Computer Science A – Final Project
-## Software & Systems Development Capstone
+APCSA Final Project
 
-Welcome to your **Final Project repository**.
+JAVA QUIZ APP
+-------------------
+A console-based multiple choice quiz application with subject selection, a leaderboard, input validation, and timed feedback - built entirely in java.
+| Java | 5 Classes | 3 Subjects | 2D Arrays |
 
-This repository will hold:
-- Your complete Java project
-- Your project journal and planning artifacts
-- Your final, working software product
+Overview
+----------------------------------------------
+The Java Quiz App is an interactive console program that quizzes users on History, Math, or Chemistry using multiple choice questions. It was designed to solve a common student problem: making self-study more engaging and interactive than reading static flashcards.
 
-This is not just an assignment — it is a **capstone software project**.
+The user selects a subject, enters their name, and answers up to 10 shuffled questions using lettered choices (A–D). At the end, they see their score, a percentage, a review of missed questions with correct answers, and a live leaderboard ranking the top 5 scores across all sessions.
 
----
+Features
+----------------------------------------------
+3 Subject Categories
+History, Math, and Chemistry — each with 10 unique multiple choice questions.
 
-## 📌 Project Overview (Read Carefully)
+Shuffled Questions
+Questions are randomized each run using Collections.shuffle() so no two quizzes feel the same.
 
-In this project, you will:
-- Design and build a **real piece of software**
-- Solve **one real problem** for **one clearly defined user**
-- Work using **agile development**
-- Show evidence of **professional software practices**
-- Use AI responsibly as a planning and support tool
+Top 5 Leaderboard
+Stores the top 5 scores using a 2D String array, sorted highest to lowest with bubble sort.
 
-You will leave this course with something you can confidently say:
+Input Validation
+All user input is validated — invalid entries prompt the user to try again without crashing.
 
-> “I built this software.”
+Timed Feedback
+Thread.sleep() adds pacing between questions and results for a polished console experience.
 
----
+Quit Mid-Quiz
+Press Q at any time to exit early. Partial scores still count toward the leaderboard.
 
-## 🔁 Required Workflow (How You Must Work)
+Play Again Loop
+After each quiz, the user can replay with any subject without restarting the program.
 
-### ✅ Daily GitHub Commits (Required)
-You are expected to:
-- Make **at least one meaningful commit every class day**
-- Write **descriptive commit messages** that explain:
-  - What you changed
-  - Why you changed it
-  - What goal it supports
+Missed Question Review
+At the end, all incorrect questions are shown again with the correct letter and answer.
 
-✅ Good commit messages:
-- `Sprint 1: Created Player class and tested constructor`
-- `Sprint 2: Implemented 2D map and verified movement logic`
+File Structure
+----------------------------------------------
+QuizApp/
+  ├── QuizRunner.java  // main class — runs the entire program
+  ├── Question.java    // data class — stores each question's data
+  ├── HistoryQuiz.java  // loads 10 history questions
+  ├── MathQuiz.java    // loads 10 math questions
+  └── ChemistryQuiz.java // loads 10 chemistry questions
 
-🚫 Poor commit messages:
-- `updates`
-- `stuff`
-- `final version`
+How to Run
+----------------------------------------------
+1) Open all .java files in your IDE (BlueJ, IntelliJ, or VS Code).
+2) Compile all five classes. Make sure all files are in the same project/package.
+3) Run QuizRunner.java — it contains the main() method and is the entry point.
+4) Follow the on-screen prompts: enter your name, pick a subject (1–3), and answer each question with A, B, C, or D. Enter Q to quit early.
 
-Your commit history is **evidence of your thinking and progress**.
+APCSA Concepts Demonstrated
+----------------------------------------------
+Classes & Objects;	    Question objects created in each subject class and passed to QuizRunner
+2D Arrays;	            String[][] leaderboard stores name, score, and subject for top 5 players
+ArrayList;	            ArrayList<Question> holds all questions and wrong answers dynamically
+Methods & Parameters;	Every feature is broken into focused, reusable static methods
+Loops;	                for loops iterate questions; while loops handle input validation and play again
+Conditionals;	        if/else for scoring feedback; switch for subject selection
+String Methods;	        equalsIgnoreCase(), toUpperCase(), trim(), split() used throughout
+Exception Handling;	    try/catch in getValidInput() and sleep() for robust error handling
+Bubble Sort;	        Leaderboard sorted highest to lowest using a nested loop bubble sort
+Javadoc Comments;	    Every class and method documented with @param and @return tags
 
----
+UML Class Diagram
+----------------------------------------------
 
-## 🔁 Agile Development & Sprints
 
-You will complete **4 sprints**.  
-Each sprint includes:
-- Planning
-- Building
-- Testing
-- Feedback and reflection
 
-Each sprint ends with:
-- A sprint grade
-- A sprint reflection
-- Feedback exchanged with peers
-
-🚫 You may NOT complete multiple sprints at once.  
-✅ Each sprint grade is **final**.
-
----
-
-## 🧪 Testing Expectations
-
-Testing is required every sprint.
-
-✅ Testing may include:
-- Running the program with different inputs
-- Print‑based testing
-- Driver program testing
-- Verifying logic and edge cases
-
-You should be able to explain:
-- What you tested
-- How you tested it
-- What you discovered or fixed
-
----
-
-## 🗂️ Required Project Components
-
-Your final project must include:
-
-- ✅ Multiple interacting Java classes
-- ✅ Encapsulation (`private` fields, appropriate getters/setters)
-- ✅ Arrays and/or ArrayLists
-- ✅ A purposeful **2D array**
-- ✅ A working driver program (`main`)
-- ✅ A class diagram matching your final code
-- ✅ Clear documentation
-- ✅ A program that runs and works
-
-Inheritance and interfaces are optional but encouraged.
-
----
-
-## 🤖 Using AI (Allowed, With Responsibility)
-
-You may use AI to:
-- Organize ideas
-- Plan sprints
-- Debug code
-- Suggest design improvements
-
-You must:
-- Document how you used AI
-- Review and evaluate AI suggestions
-- Understand and explain your final code
-
-AI should act like:
-> A junior developer you supervise — not something that builds the project for you.
-
----
-
-## 📘 Project Journal
-
-All planning, work logs, testing notes, and reflections live in **your project journal**.
-
-If it happened during this project, it should be documented there.
-
----
-
-## ✅ Final Submission Expectations
-
-By the end of the project:
-- Your program should run reliably
-- Your technical requirements should be met
-- Your code should be readable and organized
-- Your repository should look **professional**
-
----
-
-# ✨ Final Step: README Update (Very Important)
-
-When your project is complete, you must **rewrite this README**  
-so it reflects **your software**, not the assignment.
-
-Your final README should include:
-
----
-
-## 🔹 Project Title
-
-## 🔹 What This Software Does
-Explain your project in plain language.
-
-## 🔹 Who It’s For
-Describe the user and the problem being solved.
-
-## 🔹 How to Run the Program
-Clear steps so someone else can run your project.
-
-## 🔹 Technical Overview
-Brief description of:
-- Main classes
-- Key data structures
-- Program logic
-
-## 🔹 Class Diagram
-Include or link your final class diagram.
-
-## 🔹 Known Limitations / Future Improvements
-What works well, and what you would improve with more time.
-
----
-
-## 🎯 Final Reminder
-
-This repository represents **you as a developer**.
-
-Take pride in:
-- Your process
-- Your commits
-- Your code
-- Your documentation
-
-Build something real.  
-Build it thoughtfully.  
-Build it well.
